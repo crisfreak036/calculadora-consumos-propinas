@@ -22,8 +22,27 @@ function guardarCliente(){
     const validacion = [ mesa, hora ].some( campo => campo === '' );
     
     if( validacion ){
-        console.log('Todos los campos son obligatorios');
-    } else{
-        console.log(mesa, hora);
+        // Añade un mensaje de error
+        if(!document.querySelector('.alerta-personalizada')){
+            const alerta = document.createElement('div');
+            alerta.classList.add('invalid-feedback', 'd-block', 'text-center', 'alerta-personalizada');
+            alerta.textContent = 'Todos los campos son obligatorios';
+            document.querySelector('.modal-body form').appendChild(alerta);
+
+            // Elimina mensaje luego de 2,5 segundos
+            setTimeout(() => {
+                alerta.remove();
+            }, 2500);
+        }
+        return;
     }
+
+    // Con Spreed Operator asigna una copia del objeto junto a los valores de mesa y hora
+    cliente = { ...cliente, mesa, hora }
+    
+    // Ocultar Modal
+    const modalFormulario = document.querySelector('#formulario'); // Selecciona modal
+    const modalBootstrap = bootstrap.Modal.getInstance(modalFormulario); // Lo reconoce como un elemento de bootstrap
+    modalBootstrap.hide();
+
 }
