@@ -45,4 +45,14 @@ function guardarCliente(){
     const modalBootstrap = bootstrap.Modal.getInstance(modalFormulario); // Lo reconoce como un elemento de bootstrap
     modalBootstrap.hide();
 
+    // Mostrar las secciones
+    mostrarSecciones();
+}
+
+function mostrarSecciones(){
+    const seccionesOcultas = document.querySelectorAll('.d-none');
+    // Remueve la clase que oculta las secciones
+    seccionesOcultas.forEach( seccion => {
+        seccion.classList.remove('d-none');
+    });
 }
