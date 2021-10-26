@@ -6,6 +6,8 @@ let cliente = {
     pedido: []
 }
 
+let aux = [];
+
 // Objeto traductor de los id de categoría
 const categorias = {
     1: 'Comida',
@@ -133,5 +135,32 @@ function mostrarPlatillos( platillos ){
 }
 
 function agregarPlatillo(producto){
-    console.log(producto);
+
+    // Extracción del pedido actual
+    let { pedido } = cliente;
+
+    // Verificar que la cantidad sea mayor a 0
+    if(producto.cantidad > 0){
+        // Verifica la existencia del producto en el arreglo de cliente
+        const elementoExiste = pedido.some( (platillo) => platillo.id === producto.id );
+        if(elementoExiste){
+            // Busca por el id el elemento y actualiza su cantidad
+            const pedidoActualizado = pedido.map( platillo => {
+                if( platillo.id === producto.id ){
+                    platillo.cantidad = producto.cantidad;
+                }
+                return platillo;
+            });
+            // Asigna el elemento actualizado al arreglo de pedidos 
+            cliente.pedido = [...pedidoActualizado];
+
+        } else{
+            // Al no existir el elemento, asigna el contenido de pedido junto al nuevo producto al arreglo de pedido del cliente
+            cliente.pedido = [...pedido, producto];
+        }
+    } else{
+        // Quita del arreglo de pedido del cliente el elemento al que se le asigno la cantidad 0
+        const resultado = pedido.filter( platillo => platillo.id !== producto.id );
+        cliente.pedido = [...resultado]; 
+    }
 }
