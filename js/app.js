@@ -109,6 +109,18 @@ function mostrarPlatillos( platillos ){
         inputCantidad.value = 0;
         inputCantidad.id = `producto-${id}`;
         inputCantidad.classList.add('form-control'); // Clase que da estilo a los inputs en bootstrap
+        
+        /* 
+        inputCantidad.onchange = agregarPlatillo; // Sirve pero no puedo recibir parametros
+        inputCantidad.onchange = agregarPlatillo(id); // No sirve (se manda a llamar la función sólo una vez) pero recibe parametros.
+        */
+
+        inputCantidad.onchange = function(){
+            const cantidad = parseInt(inputCantidad.value);
+            // Se le entrega un objeto compuesto por todo la info de platillo y cantidad
+            agregarPlatillo({...platillo, cantidad});
+        };
+        
         // Crea contenedor para el input con el objetivo de ingresar al grid de bootstrap
         const contenedorInput = document.createElement('DIV');
         contenedorInput.classList.add('col-md-2');
@@ -118,4 +130,8 @@ function mostrarPlatillos( platillos ){
 
         contenedorPlatillos.appendChild(row);
     });
+}
+
+function agregarPlatillo(producto){
+    console.log(producto);
 }
