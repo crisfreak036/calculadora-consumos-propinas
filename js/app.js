@@ -163,4 +163,151 @@ function agregarPlatillo(producto){
         const resultado = pedido.filter( platillo => platillo.id !== producto.id );
         cliente.pedido = [...resultado]; 
     }
+    
+    // Limpiar los elementos previos del HTML en la sección del resumen
+    limpiarHTML();
+
+    // Muestra un resumen del pedido
+    mostrarResumen();
+}
+
+function mostrarResumen(){
+    
+    if( cliente.pedido.length <= 0){
+        mensajePedidoVacio();
+        return;
+    }
+
+    const contenido = document.querySelector('#resumen .contenido.row');
+
+    const resumen = document.createElement('DIV');
+    resumen.classList.add('col-md-6', 'card', 'py-5', 'px-3', 'shadow');
+
+    // Título de la sección
+    const heading = document.createElement('H3');
+    heading.textContent = 'Platillos Consumidos';
+    heading.classList.add('my-4', 'text-center');
+
+    // Información de la mesa del cliente
+    const mesa = document.createElement('P');
+    mesa.textContent = 'Mesa: ';
+    mesa.classList.add('fw-bold');
+
+    const mesaSpan = document.createElement('SPAN');
+    mesaSpan.textContent = cliente.mesa;
+    mesaSpan.classList.add('fw-normal');
+    mesa.appendChild(mesaSpan); // Se agrega al parrafo
+
+    // Información de la hora de llegada del cliente
+    const hora = document.createElement('P');
+    hora.textContent = 'Hora: ';
+    hora.classList.add('fw-bold');
+
+    const horaSpan = document.createElement('SPAN');
+    horaSpan.textContent = cliente.hora;
+    horaSpan.classList.add('fw-normal');
+    hora.appendChild(horaSpan); // Se agrega al parrafo
+
+    // Iterar sobre el Array de pedidos
+    const grupoPlatillos = document.createElement('UL');
+    grupoPlatillos.classList.add('list-group');
+
+    const { pedido } = cliente;
+    pedido.forEach( platillo => {
+        const { nombre, cantidad, precio, id } = platillo;
+
+        const lista = document.createElement('LI');
+        lista.classList.add('list-group-item');
+
+        // Elemento que contendrá el nombre del platillo
+        const nombreHTML = document.createElement('H4');
+        nombreHTML.classList.add('my-4');
+        nombreHTML.textContent = nombre;
+
+        // Elemento que contendrá la cantidad de ordenes del platillo
+        const cantidadHTML = document.createElement('P');
+        cantidadHTML.classList.add('fw-bold');
+        cantidadHTML.textContent = 'Cantidad: ';
+
+        const spanCantidad = document.createElement('SPAN');
+        spanCantidad.classList.add('fw-normal');
+        spanCantidad.textContent = cantidad;
+        cantidadHTML.appendChild(spanCantidad); // Agrega el span al parrafo
+
+        // Elemento que contendrá el precio del platillo
+        const precioHTML = document.createElement('P');
+        precioHTML.classList.add('fw-bold');
+        precioHTML.textContent = 'Precio Platillo: ';
+
+        const spanPrecio = document.createElement('SPAN');
+        spanPrecio.classList.add('fw-normal');
+        spanPrecio.textContent = `$${precio}`;
+        precioHTML.appendChild(spanPrecio); // Agrega el span al parrafo
+
+        // Elemento que contendrá un subtotal del pedido del platillo
+        const subTotalHTML = document.createElement('P');
+        subTotalHTML.classList.add('fw-bold');
+        subTotalHTML.textContent = 'SubTotal: ';
+
+        const spanSubTotal = document.createElement('SPAN');
+        spanSubTotal.classList.add('fw-normal');
+        spanSubTotal.textContent = calcularSubTotal(precio, cantidad);
+        subTotalHTML.appendChild(spanSubTotal); // Agrega el span al parrafo
+
+        // Botón para eliminar el platillo
+        const btnEliminar = document.createElement('BUTTON');
+        btnEliminar.classList.add('btn', 'btn-danger');
+        btnEliminar.textContent = 'Eliminar del pedido';
+        btnEliminar.onclick = function(){
+            eliminarPlatilloPedido(id);
+        }
+
+        // Agrega los elementos al elemento LI
+        lista.append(nombreHTML, cantidadHTML, precioHTML, subTotalHTML, btnEliminar);
+
+        // Agrega el elemento LI al grupo de platillos (UL)
+        grupoPlatillos.appendChild(lista);
+    });
+
+    // Agrega los elementos al resumen
+    resumen.append( heading, mesa, hora, grupoPlatillos);
+
+    // Agrega el resumen al DOM
+    contenido.appendChild(resumen);
+}
+
+function limpiarHTML(){
+    const contenido = document.querySelector('#resumen .contenido.row');
+    while( contenido.firstChild ){
+        contenido.removeChild( contenido.firstChild );
+    }
+}
+
+function calcularSubTotal(precio, cantidad){
+    return `$${precio * cantidad}`;
+}
+
+function eliminarPlatilloPedido(id){
+    const { pedido } = cliente;
+    // Se limpia el valor del input
+    const inputPlatillo = document.querySelector(`#producto-${id}`);
+    inputPlatillo.value = 0;
+
+    // Se actualiza el arreglo de pedidos
+    const resultado = pedido.filter( platillo => platillo.id !== id);
+    cliente.pedido = [...resultado];
+
+    // Limpia el HTML
+    limpiarHTML();
+
+    // Muestra el nuevo resumen
+    mostrarResumen();
+}
+
+function mensajePedidoVacio(){
+    const contenido = document.querySelector('#resumen .contenido.row');
+    const parrafo = document.createElement('P');
+    parrafo.classList.add('text-center');
+    parrafo.textContent = 'Añade los elemento del pedido';
+    contenido.appendChild(parrafo);    
 }
