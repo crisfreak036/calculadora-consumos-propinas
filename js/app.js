@@ -319,21 +319,87 @@ function formularioPropinas(){
     
     const contenido = document.querySelector('#resumen .contenido.row');
     
+    // Creación del contenedor del formulario
     const divFormularioPropina = document.createElement('DIV');
     divFormularioPropina.classList.add('col-md-6');
     divFormularioPropina.id = 'contenedor-formulario-propinas';
 
+    // Creación del formulario
     const formularioPropina = document.createElement('DIV');
     formularioPropina.classList.add('card', 'py-2', 'px-3', 'shadow');
     // formularioPropina.id = 'formulario-propinas';
 
+    // Título del formulario
     const heading = document.createElement('H3');
     heading.classList.add('my-4', 'text-center');
     heading.textContent = 'Propina';
 
+    // Creación de los Radio Button (permite seleccionar sólo un botón de una serie de botones)
+    // Propina del 10%
+    // Contenedor
+    const contenedorRadio10PorCiento = document.createElement('DIV');
+    contenedorRadio10PorCiento.classList.add('form-check'); // Estilo del contenedor de un radio button con bootstrap
+
+    // Input
+    const radio10PorCiento = document.createElement('INPUT');
+    radio10PorCiento.type = 'radio'; // Establecer tipo del input a radio
+    radio10PorCiento.name = 'propina';
+    radio10PorCiento.value = 10;
+    radio10PorCiento.classList.add('form-check-input'); // Estilo de radio button con bootstrap
+
+    // Label
+    const radio10PorCientoLabel = document.createElement('LABEL');
+    radio10PorCientoLabel.textContent = '10%'
+    radio10PorCientoLabel.classList.add('form-check-label'); // Estilo de label con bootstrap
+
+    // Agregar los elemento a su contenedor
+    contenedorRadio10PorCiento.append(radio10PorCiento, radio10PorCientoLabel);
+
+    // Propina del 25%
+    // Contenedor
+    const contenedorRadio25PorCiento = document.createElement('DIV');
+    contenedorRadio25PorCiento.classList.add('form-check'); // Estilo del contenedor de un radio button con bootstrap
+
+    // Input
+    const radio25PorCiento = document.createElement('INPUT');
+    radio25PorCiento.type = 'radio'; // Establecer tipo del input a radio
+    radio25PorCiento.name = 'propina';
+    radio25PorCiento.value = 25;
+    radio25PorCiento.classList.add('form-check-input'); // Estilo de radio button con bootstrap
+
+    // Label
+    const radio25PorCientoLabel = document.createElement('LABEL');
+    radio25PorCientoLabel.textContent = '25%'
+    radio25PorCientoLabel.classList.add('form-check-label'); // Estilo de label con bootstrap
+
+    // Agregar los elemento a su contenedor
+    contenedorRadio25PorCiento.append(radio25PorCiento, radio25PorCientoLabel);
+
+    // Propina del 50%
+    // Contenedor
+    const contenedorRadio50PorCiento = document.createElement('DIV');
+    contenedorRadio50PorCiento.classList.add('form-check'); // Estilo del contenedor de un radio button con bootstrap
+
+    // Input
+    const radio50PorCiento = document.createElement('INPUT');
+    radio50PorCiento.type = 'radio'; // Establecer tipo del input a radio
+    radio50PorCiento.name = 'propina';
+    radio50PorCiento.value = 50;
+    radio50PorCiento.classList.add('form-check-input'); // Estilo de radio button con bootstrap
+
+    // Label
+    const radio50PorCientoLabel = document.createElement('LABEL');
+    radio50PorCientoLabel.textContent = '50%'
+    radio50PorCientoLabel.classList.add('form-check-label'); // Estilo de label con bootstrap
+
+    // Agregar los elemento a su contenedor
+    contenedorRadio50PorCiento.append(radio50PorCiento, radio50PorCientoLabel);
+
+
+
 
     // Agrega los elementos formulario
-    formularioPropina.append(heading);
+    formularioPropina.append(heading, contenedorRadio10PorCiento, contenedorRadio25PorCiento, contenedorRadio50PorCiento);
 
     // Agrega todo al div formulario
     divFormularioPropina.appendChild(formularioPropina);
