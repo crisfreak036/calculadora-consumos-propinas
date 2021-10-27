@@ -438,5 +438,56 @@ function calcularPropina(){
 
     totalPagar = subTotal + propina; // Calculo del total a pagar
 
-    console.log(subTotal, propina, totalPagar);
+    // Limpia un resumen de costos previo
+    if(document.querySelector('#costos-pagar') != null){
+        document.querySelector('#costos-pagar').remove();
+    }
+
+    // Muestra en el HTML todos los costos asociados a la orden
+    mostrarCostosHTML( subTotal, propina, totalPagar );
+}
+
+function mostrarCostosHTML( subTotal, propina, totalPagar ){
+    
+    const contenedorFormulario = document.querySelector('#contenedor-formulario-propinas > div');
+
+    const contenedorCostosOrden = document.createElement('DIV');
+    contenedorCostosOrden.id = 'costos-pagar';
+    contenedorCostosOrden.classList.add('my-5');
+
+    // Subtotal
+    const parrafoSubTotal = document.createElement('P');
+    parrafoSubTotal.classList.add('fs-4', 'fw-bold', 'mt-2');
+    parrafoSubTotal.textContent = 'SubTotal Consumo: ';
+
+    const spanSubTotal = document.createElement('SPAN');
+    spanSubTotal.classList.add('fw-normal');
+    spanSubTotal.textContent = `$${subTotal}`;
+    parrafoSubTotal.appendChild(spanSubTotal);
+
+    // Propina
+    const parrafoPropina = document.createElement('P');
+    parrafoPropina.classList.add('fs-4', 'fw-bold', 'mt-2');
+    parrafoPropina.textContent = 'Propina: ';
+
+    const spanPropina = document.createElement('SPAN');
+    spanPropina.classList.add('fw-normal');
+    spanPropina.textContent = `$${propina}`;
+    parrafoPropina.appendChild(spanPropina);
+
+    // Total
+    const parrafoTotalPagar = document.createElement('P');
+    parrafoTotalPagar.classList.add('fs-2', 'fw-bold', 'mt-4');
+    parrafoTotalPagar.textContent = 'Total a Pagar: ';
+
+    const spanTotalPagar = document.createElement('SPAN');
+    spanTotalPagar.classList.add('fw-normal');
+    spanTotalPagar.textContent = `$${totalPagar}`;
+    parrafoTotalPagar.appendChild(spanTotalPagar);
+
+    // Inserta los elementos en su contenedor
+    contenedorCostosOrden.append(parrafoSubTotal, parrafoPropina, parrafoTotalPagar);
+
+    // Añade el contenedor al formulario
+    contenedorFormulario.appendChild(contenedorCostosOrden);
 }
