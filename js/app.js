@@ -352,6 +352,11 @@ function formularioPropinas(){
     radio10PorCientoLabel.textContent = '10%'
     radio10PorCientoLabel.classList.add('form-check-label'); // Estilo de label con bootstrap
 
+    // Evento
+    radio10PorCiento.onclick = function(){
+        calcularPropina();
+    };
+
     // Agregar los elemento a su contenedor
     contenedorRadio10PorCiento.append(radio10PorCiento, radio10PorCientoLabel);
 
@@ -371,6 +376,11 @@ function formularioPropinas(){
     const radio25PorCientoLabel = document.createElement('LABEL');
     radio25PorCientoLabel.textContent = '25%'
     radio25PorCientoLabel.classList.add('form-check-label'); // Estilo de label con bootstrap
+
+    // Evento
+    radio25PorCiento.onclick = function(){
+        calcularPropina();
+    };
 
     // Agregar los elemento a su contenedor
     contenedorRadio25PorCiento.append(radio25PorCiento, radio25PorCientoLabel);
@@ -395,7 +405,10 @@ function formularioPropinas(){
     // Agregar los elemento a su contenedor
     contenedorRadio50PorCiento.append(radio50PorCiento, radio50PorCientoLabel);
 
-
+    // Evento
+    radio50PorCiento.onclick = function(){
+        calcularPropina();
+    };
 
 
     // Agrega los elementos formulario
@@ -406,4 +419,24 @@ function formularioPropinas(){
     
     // Agrega el formulario al DOM
     contenido.appendChild(divFormularioPropina);
+}
+
+function calcularPropina(){
+    const { pedido } = cliente;
+    let subTotal = 0;
+    let propina = 0;
+    let totalPagar = 0;
+
+    // Calcula el subtotal de todo el pedido iterando el arreglo de pedidos
+    pedido.forEach( platillo => {
+        subTotal += platillo.cantidad * platillo.precio;
+    });
+
+    // Selector de atributo para el radio button seleccionado
+    const propinaSeleccionada = parseInt(document.querySelector('[name="propina"]:checked').value);
+    propina = (subTotal * propinaSeleccionada) / 100; // Calculo de la propina
+
+    totalPagar = subTotal + propina; // Calculo del total a pagar
+
+    console.log(subTotal, propina, totalPagar);
 }
