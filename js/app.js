@@ -181,7 +181,7 @@ function mostrarResumen(){
     const contenido = document.querySelector('#resumen .contenido.row');
 
     const resumen = document.createElement('DIV');
-    resumen.classList.add('col-md-6', 'card', 'py-5', 'px-3', 'shadow');
+    resumen.classList.add('col-md-6', 'card', 'py-2', 'px-3', 'shadow');
 
     // Título de la sección
     const heading = document.createElement('H3');
@@ -274,6 +274,9 @@ function mostrarResumen(){
 
     // Agrega el resumen al DOM
     contenido.appendChild(resumen);
+
+    // Muestra el formulario de propinas
+    formularioPropinas();
 }
 
 function limpiarHTML(){
@@ -310,4 +313,31 @@ function mensajePedidoVacio(){
     parrafo.classList.add('text-center');
     parrafo.textContent = 'Añade los elemento del pedido';
     contenido.appendChild(parrafo);    
+}
+
+function formularioPropinas(){
+    
+    const contenido = document.querySelector('#resumen .contenido.row');
+    
+    const divFormularioPropina = document.createElement('DIV');
+    divFormularioPropina.classList.add('col-md-6');
+    divFormularioPropina.id = 'contenedor-formulario-propinas';
+
+    const formularioPropina = document.createElement('DIV');
+    formularioPropina.classList.add('card', 'py-2', 'px-3', 'shadow');
+    // formularioPropina.id = 'formulario-propinas';
+
+    const heading = document.createElement('H3');
+    heading.classList.add('my-4', 'text-center');
+    heading.textContent = 'Propina';
+
+
+    // Agrega los elementos formulario
+    formularioPropina.append(heading);
+
+    // Agrega todo al div formulario
+    divFormularioPropina.appendChild(formularioPropina);
+    
+    // Agrega el formulario al DOM
+    contenido.appendChild(divFormularioPropina);
 }
